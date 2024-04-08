@@ -5,7 +5,7 @@
 import UIKit
 
 // The Task model
-struct Task {
+struct Task: Codable {
 
     // The task's title
     var title: String
@@ -16,12 +16,24 @@ struct Task {
     // The due date by which the task should be completed
     var dueDate: Date
 
+    // The date the task was completed
+    // private(set) means this property can only be set from within this struct, but read from anywhere (i.e. public)
+    private(set) var completedDate: Date?
+
+    // The date the task was created
+    // This property is set as the current date whenever the task is initially created.
+    let createdDate: Date = Date()
+
+    // An id (Universal Unique Identifier) used to identify a task.
+    let id: String
+    
     // Initialize a new task
     // `note` and `dueDate` properties have default values provided if none are passed into the init by the caller.
-    init(title: String, note: String? = nil, dueDate: Date = Date()) {
+    init(title: String, note: String? = nil, dueDate: Date = Date(), id: String = UUID().uuidString) {
         self.title = title
         self.note = note
         self.dueDate = dueDate
+        self.id = id
     }
 
     // A boolean to determine if the task has been completed. Defaults to `false`
@@ -37,40 +49,61 @@ struct Task {
             }
         }
     }
+    
+    mutating func markComplete() {
+        isComplete = true
+        completedDate = Date()
+    }
 
-    // The date the task was completed
-    // private(set) means this property can only be set from within this struct, but read from anywhere (i.e. public)
-    private(set) var completedDate: Date?
-
-    // The date the task was created
-    // This property is set as the current date whenever the task is initially created.
-    let createdDate: Date = Date()
-
-    // An id (Universal Unique Identifier) used to identify a task.
-    let id: String = UUID().uuidString
+    mutating func markIncomplete() {
+        isComplete = false
+        completedDate = nil
+    }
 }
 
 // MARK: - Task + UserDefaults
 extension Task {
 
-
+    // Define a key for saving tasks in UserDefaults
+        private static let tasksKey = "tasks"
+    
     // Given an array of tasks, encodes them to data and saves to UserDefaults.
     static func save(_ tasks: [Task]) {
 
         // TODO: Save the array of tasks
+        let encoder = JSONEncoder()
+        do {
+            let data = try encoder.encode(tasks)
+            UserDefaults.standard.set(data, forKey: tasksKey)
+        } catch let error {
+            print("Error saving tasks: \(error)")
+        }
     }
 
     // Retrieve an array of saved tasks from UserDefaults.
     static func getTasks() -> [Task] {
         
         // TODO: Get the array of saved tasks from UserDefaults
+        guard let data = UserDefaults.standard.data(forKey: tasksKey),
+              let tasks = try? JSONDecoder().decode([Task].self, from: data) else {
+            return []
+        }
+        return tasks
 
-        return [] // 👈 replace with returned saved tasks
+      //  return [] // 👈 replace with returned saved tasks
     }
 
     // Add a new task or update an existing task with the current task.
     func save() {
 
         // TODO: Save the current task
+        var tasks = Task.getTasks()
+        if let index = tasks.firstIndex(where: { $0.id == self.id }) {
+            tasks[index] = self
+        } else {
+            tasks.append(self)
+        }
+        Task.save(tasks)
     }
 }
+
