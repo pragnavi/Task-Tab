@@ -1,14 +1,13 @@
-# Project 7 - *Task Tab*
+# Task Tab - Efficient Task Management App
 
-Submitted by: **Pragnavi Ravuluri Sai Durga**
+
 
 **Task Tab** is an app that provides a streamlined interface for users to manage their tasks effectively. Designed with simplicity and efficiency in mind, it allows users to create, view, edit, and toggle the completion status of tasks with ease. The app leverages UserDefaults for local storage, ensuring that all tasks are persisted across app launches, providing a seamless user experience. Featuring tab bar navigation, Task Tab offers two main views: a task list for everyday task management and a calendar view to track task deadlines and completion. Each task can include a title, an optional note for additional details, and a due date. Users can mark tasks as complete or incomplete with a simple tap, and the app automatically updates task ordering and storage to reflect these changes. Task Tab is the go-to solution for anyone looking to organize their daily activities and deadlines efficiently.
 
-Time spent: **6** hours spent in total
 
-## Required Features
+## Features
 
-The following **required** functionality is completed:
+The following features are implemented:
 
 - [x] App displays a list of tasks
 - [x] Users can add tasks to the list
@@ -16,10 +15,6 @@ The following **required** functionality is completed:
   - [x] Note: You have to quit the app, not minimize it, in order to see the persistence.
 - [x] Tasks can be deleted
 - [x] Users have a calendar view via navigation controller that displays tasks    
-
-
-The following **additional** features are implemented:
-
 - [x] Tasks can be toggled completed
 - [x] User can edit tasks by tapping on the task in the feed view
 
@@ -35,8 +30,6 @@ The following **additional** features are implemented:
 </div>
 
 ## Notes
-
-Describe any challenges encountered while building the app.
 
 One significant challenge in developing the Task Tab app was ensuring seamless data persistence using UserDefaults, specifically when encoding and decoding custom Task objects. The intricacies of handling Codable conformance for complex types and managing JSON serialization presented specific hurdles. This was compounded by the need to uniquely identify and update tasks without duplication, requiring precise logic to manage task IDs effectively within UserDefaults. This aspect underscored the complexity of implementing a reliable local storage solution for custom data types in iOS applications.
 
