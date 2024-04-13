@@ -22,7 +22,6 @@ The following features are implemented:
 
 <div>
     <a href="https://www.loom.com/share/e9efc6b9fa57452fbe67ab3ff39ccc69">
-      <p>iOS recording - 09 Apr 2024 - Watch Video</p>
     </a>
     <a href="https://www.loom.com/share/e9efc6b9fa57452fbe67ab3ff39ccc69">
       <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/e9efc6b9fa57452fbe67ab3ff39ccc69-with-play.gif">
